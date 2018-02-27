@@ -14,7 +14,11 @@ import com.github.drinkjava2.InjectBox;
 @Component // for Spring usage
 @Scope("prototype") // for Spring usage
 public class D2 {
-	private final E e;
+	@de.voodoosoft.blackcat.Inject
+	private E e;
+
+	public D2() {
+	}
 
 	@InjectBox // for jBeanBox
 	@Inject // for JSR330 compliant DI libraries

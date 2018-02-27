@@ -12,8 +12,14 @@ import java.util.Objects;
 @Component // for Spring usage
 @Scope("prototype") // for Spring usage
 public class C {
-	private final D1 d1;
-	private final D2 d2;
+	@de.voodoosoft.blackcat.Inject
+	private D1 d1;
+
+	@de.voodoosoft.blackcat.Inject
+	private D2 d2;
+
+	public C() {
+	}
 
 	@InjectBox // for jBeanBox
 	@Inject // for JSR330 compliant DI libraries

@@ -1,14 +1,3 @@
-import static com.greenlaw110.di_benchmark.DIFactory.dagger;
-import static com.greenlaw110.di_benchmark.DIFactory.feather;
-import static com.greenlaw110.di_benchmark.DIFactory.genie;
-import static com.greenlaw110.di_benchmark.DIFactory.guice;
-import static com.greenlaw110.di_benchmark.DIFactory.jbeanboxAnnotation;
-import static com.greenlaw110.di_benchmark.DIFactory.jbeanboxNormal;
-import static com.greenlaw110.di_benchmark.DIFactory.jbeanboxTypeSafe;
-import static com.greenlaw110.di_benchmark.DIFactory.pico;
-import static com.greenlaw110.di_benchmark.DIFactory.spring;
-import static com.greenlaw110.di_benchmark.DIFactory.vanilla;
-
 import org.codejargon.feather.Feather;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -23,6 +12,8 @@ import com.greenlaw110.di_benchmark.objects.A;
 
 import dagger.ObjectGraph;
 
+import static com.greenlaw110.di_benchmark.DIFactory.*;
+
 public class BenchmarkTest extends Assert {
 
 	static VanillaContainer vanilla;
@@ -35,6 +26,7 @@ public class BenchmarkTest extends Assert {
 	static BeanBoxContext jbeanboxNormal;
 	static BeanBoxContext jbeanboxTypeSafe;
 	static BeanBoxContext jbeanboxAnnotation;
+	static de.voodoosoft.blackcat.Injector blackcat;
 
 	@BeforeClass
 	public static void setup() {
@@ -48,6 +40,7 @@ public class BenchmarkTest extends Assert {
 		jbeanboxNormal = jbeanboxNormal();
 		jbeanboxTypeSafe = jbeanboxTypeSafe();
 		jbeanboxAnnotation = jbeanboxAnnotation();
+		blackcat = blackcat();
 	}
 
 	@org.junit.Test
@@ -62,6 +55,7 @@ public class BenchmarkTest extends Assert {
 		A jbeanboxNormalA = jbeanboxNormal.getBean(A.class);
 		A jbeanboxTypeSafeA = jbeanboxTypeSafe.getBean(A.class);
 		A jbeanboxAnnotatioA = jbeanboxAnnotation.getBean(A.class);
+		A blackcatA = blackcat.getComponent(A.class);
 
 		eq(vanillaA, guiceA);
 		eq(guiceA, featherA);
@@ -72,6 +66,7 @@ public class BenchmarkTest extends Assert {
 		eq(springA, jbeanboxNormalA);
 		eq(jbeanboxNormalA, jbeanboxTypeSafeA);
 		eq(jbeanboxTypeSafeA, jbeanboxAnnotatioA);
+		eq(jbeanboxAnnotatioA, blackcatA);
 	}
 
 	@org.junit.Test
@@ -108,6 +103,7 @@ public class BenchmarkTest extends Assert {
 		assertNotSame(jbeanboxNormalA, jbeanboxNormalB);
 		assertNotSame(jbeanboxTypeSafeA, jbeanboxTypeSafeB);
 		assertNotSame(jbeanboxAnnotatioA, jbeanboxAnnotatioB);
+		assertNotSame(jbeanboxAnnotatioB, blackcat);
 	}
 
 	private void eq(Object a, Object b) {

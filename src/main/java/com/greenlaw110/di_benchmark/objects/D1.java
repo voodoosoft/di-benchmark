@@ -14,6 +14,9 @@ import java.util.Objects;
 @Scope("prototype") // for Spring usage
 public class D1 {
 
+	public D1() {
+	}
+
 	@InjectBox // for jBeanBox
 	@Inject // for JSR330 compliant DI libraries
 	public D1(E e) {

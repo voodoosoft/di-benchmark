@@ -1,15 +1,5 @@
 package com.greenlaw110.di_benchmark;
 
-import static com.greenlaw110.di_benchmark.DIFactory.dagger;
-import static com.greenlaw110.di_benchmark.DIFactory.genie;
-import static com.greenlaw110.di_benchmark.DIFactory.guice;
-import static com.greenlaw110.di_benchmark.DIFactory.jbeanboxAnnotation;
-import static com.greenlaw110.di_benchmark.DIFactory.jbeanboxNormal;
-import static com.greenlaw110.di_benchmark.DIFactory.jbeanboxTypeSafe;
-import static com.greenlaw110.di_benchmark.DIFactory.pico;
-import static com.greenlaw110.di_benchmark.DIFactory.spring;
-import static com.greenlaw110.di_benchmark.DIFactory.vanilla;
-
 import com.greenlaw110.di_benchmark.objects.A0;
 import org.codejargon.feather.Feather;
 import org.osgl.inject.Genie;
@@ -22,6 +12,8 @@ import com.greenlaw110.di_benchmark.DIFactory.VanillaContainer;
 import com.greenlaw110.di_benchmark.objects.A;
 
 import dagger.ObjectGraph;
+
+import static com.greenlaw110.di_benchmark.DIFactory.*;
 
 /**
  * Measures bootstrap cost of different DI tools. An iteration includes creating
@@ -45,6 +37,7 @@ public class RuntimeBenchmark {
 		BeanBoxContext jbeanboxAnnotation = jbeanboxAnnotation();
 		ApplicationContext spring = spring(false);
 		ApplicationContext springScan = spring(true);
+		de.voodoosoft.blackcat.Injector blackcat = blackcat();
 
 		final Class<?> CLS = singleton ? A_SINGLETON_CLS : A_CLS;
 
@@ -60,6 +53,7 @@ public class RuntimeBenchmark {
 				jbeanboxTypeSafe.getBean(CLS);
 				jbeanboxAnnotation.getBean(CLS);
 			}
+			blackcat.getComponent(CLS);
 		}
 
 		StopWatch.millis("Vanilla", () -> {
@@ -134,6 +128,12 @@ public class RuntimeBenchmark {
 				}
 			});
 		}
+
+		StopWatch.millis("Blackcat", () -> {
+			for (int i = 0; i < iterations; ++i) {
+				blackcat.getComponent(CLS);
+			}
+		});
 
 	}
 

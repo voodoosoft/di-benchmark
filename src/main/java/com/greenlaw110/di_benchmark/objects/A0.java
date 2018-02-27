@@ -11,7 +11,11 @@ import java.util.Objects;
 @Component // for Spring usage
 @Singleton // for JSR330 compliant DI library usage
 public class A0 {
-	private final B b;
+	@de.voodoosoft.blackcat.Inject
+	private B b;
+
+	public A0() {
+	}
 
 	@InjectBox // for jBeanBox
 	@Inject // for JSR330 compliant DI libraries

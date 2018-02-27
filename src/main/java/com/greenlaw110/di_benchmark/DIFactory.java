@@ -181,4 +181,16 @@ public class DIFactory {
         }
 
     }
+
+    public static de.voodoosoft.blackcat.Injector blackcat() {
+		de.voodoosoft.blackcat.Injector injector = de.voodoosoft.blackcat.Injector.getInjector();
+		injector.defineComponent(A.class, () -> new A());
+		injector.defineComponent(A0.class, () -> new A0());
+		injector.defineComponent(B.class, () -> new B());
+		injector.defineComponent(C.class, () -> new C());
+		injector.defineComponent(D1.class, () -> new D1());
+		injector.defineComponent(D2.class, () -> new D2());
+		injector.defineComponent(E.class, () -> new E());
+		return injector;
+    }
 }

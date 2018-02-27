@@ -11,6 +11,8 @@ import com.github.drinkjava2.InjectBox;
 @Component // for Spring usage
 @Scope("prototype") // for Spring usage
 public class E {
+	public E() {
+	}
 
 	@Override
 	public int hashCode() {
